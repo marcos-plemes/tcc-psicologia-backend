@@ -18,8 +18,12 @@ conn.autocommit = True
 
 app = Flask(__name__)
 
-@app.route('/perguntas')
+@app.route('/')
 def home():
+    return "teste"
+
+@app.route('/perguntas')
+def getperguntas():
     cursor.execute("SELECT * FROM perguntas")
     perguntas = list()
     for pergunta in cursor.fetchall():
@@ -42,6 +46,3 @@ def cadastrarPergunta():
         request.json.get('imagem')
     ))
     return jsonify({'message': 'Pergunta cadastrada com sucesso!'}), 201
-
-if __name__ == '__main__':
-    app.run(debug=True)

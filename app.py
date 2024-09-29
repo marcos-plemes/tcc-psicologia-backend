@@ -18,7 +18,7 @@ cursor = conn.cursor()
 conn.autocommit = True
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 
 @app.route('/')
 def home():

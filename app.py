@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import psycopg2
 import os  # Adicione esta linha
 from dotenv import load_dotenv
@@ -17,6 +18,7 @@ cursor = conn.cursor()
 conn.autocommit = True
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -46,3 +48,4 @@ def cadastrarPergunta():
         request.json.get('imagem')
     ))
     return jsonify({'message': 'Pergunta cadastrada com sucesso!'}), 201
+

@@ -3,9 +3,9 @@ import base64
 
 def registrar_rotas_grupos(app, cursor):
     @app.route('/grupos/<int:codigo>', methods=['DELETE'])
-        def deletarGrupo(codigo):
-            cursor.execute("DELETE FROM grupo WHERE gp_codigo = %s", (codigo,))
-            return jsonify({'message': 'Grupo deletada com sucesso!'}), 200
+    def deletarGrupo(codigo):
+        cursor.execute("DELETE FROM grupo WHERE gp_codigo = %s", (codigo,))
+        return jsonify({'message': 'Grupo deletada com sucesso!'}), 200
 
     @app.route('/grupos')
     def get_grupos():

@@ -10,7 +10,7 @@ def registrar_rotas_grupos(app, cursor):
             grupos.append({
                 'codigo': grupo[0],
                 'nome': grupo[1],
-                'isMostrarFoto': grupo[2]
+                'isMostrarImagem': grupo[2]
             })
     
         return grupos
@@ -24,7 +24,7 @@ def registrar_rotas_grupos(app, cursor):
             return jsonify({
                 'codigo': grupo[0],
                 'nome': grupo[1],
-                'isMostrarFoto': grupo[2]
+                'isMostrarImagem': grupo[2]
             })
         else:
             return jsonify({'message': 'Grupo não encontrada'}), 404

@@ -33,8 +33,8 @@ def registrar_rotas_grupos(app, cursor):
     def cadastrarGrupo():
         try:
             cursor.execute("INSERT INTO public.grupo (gp_nome,gp_mostrar_foto) VALUES(%s, %s) RETURNING gp_codigo",
-                        (request.form['descricao'],
-                            request.form['isMostrarImagem']))
+                        (request.form['nome'],
+                         request.form['isMostrarImagem']))
         
             codigo = cursor.fetchone()[0]
             return jsonify({
@@ -46,9 +46,13 @@ def registrar_rotas_grupos(app, cursor):
         
     @app.route('/grupos', methods=['PUT'])
     def alterarGrupo():
+        codigo = request.form['codigo']
+        print(request.form)
+        if codigo == '':
+            return jsonify({"error": "Código não informado"}), 400
         try:
             cursor.execute("UPDATE public.grupo SET gp_mostrar_foto=%s, gp_nome=%s WHERE gp_codigo=%s;",
-                        (request.form['descricao'],
+                        (request.form['nome'],
                          request.form['isMostrarImagem'],
                          request.form['codigo']))
             return jsonify({'message': 'Grupo Alterado com sucesso!'}), 201    

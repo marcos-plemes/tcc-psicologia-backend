@@ -24,7 +24,7 @@ def registrar_rotas_grupos(app, cursor):
             return jsonify({
                 'codigo': grupo[0],
                 'nome': grupo[1],
-                'imaisMostrarFotogem': grupo[2]
+                'isMostrarFoto': grupo[2]
             })
         else:
             return jsonify({'message': 'Grupo não encontrada'}), 404

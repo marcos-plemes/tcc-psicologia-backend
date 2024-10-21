@@ -52,8 +52,8 @@ def registrar_rotas_grupos(app, cursor):
             return jsonify({"error": "Código não informado"}), 400
         try:
             cursor.execute("UPDATE public.grupo SET gp_mostrar_foto=%s, gp_nome=%s WHERE gp_codigo=%s;",
-                        (request.form['nome'],
-                         request.form['isMostrarImagem'],
+                        (request.form['isMostrarImagem'],
+                         request.form['nome'],
                          request.form['codigo']))
             return jsonify({'message': 'Grupo Alterado com sucesso!'}), 201    
         except Exception as e:

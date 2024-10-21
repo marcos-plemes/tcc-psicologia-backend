@@ -4,7 +4,8 @@ import psycopg2
 import base64
 import os  # Adicione esta linha
 from dotenv import load_dotenv
-from perguntas import registrar_rotas
+from perguntas import registrar_rotas_perguntas
+from grupos import registrar_rotas_grupos
 
 load_dotenv()  # Carrega as variáveis de ambiente do .env
 
@@ -26,7 +27,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def home():
     return "teste"
 
-registrar_rotas(app, cursor)
+registrar_rotas_perguntas(app, cursor)
+registrar_rotas_grupos(app, cursor)
 
 # if __name__ == '__main__':
 #     app.run(debug=True)

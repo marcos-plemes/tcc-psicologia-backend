@@ -1,7 +1,7 @@
 from flask import request, jsonify
 import base64
 
-def registrar_rotas(app, cursor):
+def registrar_rotas_perguntas(app, cursor):
     @app.route('/perguntas/<int:codigo>', methods=['DELETE'])
     def deletarPergunta(codigo):
         cursor.execute("DELETE FROM perguntas WHERE pg_codigo = %s", (codigo,))

@@ -9,7 +9,7 @@ def registrar_rotas_grupos(app, cursor):
 
     @app.route('/grupos')
     def get_grupos():
-        cursor.execute("SELECT * FROM grupo")
+        cursor.execute("SELECT * FROM grupo ORDER BY gp_nome")
         grupos = list()
         for grupo in cursor.fetchall():
             grupos.append({

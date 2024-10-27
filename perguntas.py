@@ -32,6 +32,19 @@ def registrar_rotas_perguntas(app, cursor):
             })
     
         return perguntas
+    
+    @app.route('/perguntas-com-imagem')
+    def getperguntas():
+        cursor.execute("SELECT * FROM perguntas ORDER BY pg_descricao")
+        perguntas = list()
+        for pergunta in cursor.fetchall():
+            perguntas.append({
+                'codigo': pergunta[0],
+                'descricao': pergunta[1],
+                'imagem': f"data:image/jpeg;base64,{base64.b64encode(pergunta[2]).decode('utf-8')}"
+            })
+    
+        return perguntas
 
     @app.route('/perguntas', methods=['POST'])
     def cadastrarPergunta():

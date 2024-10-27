@@ -23,7 +23,7 @@ def registrar_rotas_perguntas(app, cursor):
 
     @app.route('/perguntas')
     def getperguntas():
-        cursor.execute("SELECT pg_codigo, pg_descricao FROM perguntas")
+        cursor.execute("SELECT pg_codigo, pg_descricao FROM perguntas ORDER BY pg_descricao")
         perguntas = list()
         for pergunta in cursor.fetchall():
             perguntas.append({

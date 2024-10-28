@@ -34,7 +34,7 @@ def registrar_rotas_perguntas(app, cursor):
         return perguntas
     
     @app.route('/perguntas-com-imagem')
-    def getperguntas():
+    def getperguntasComImagem():
         cursor.execute("SELECT * FROM perguntas ORDER BY pg_descricao")
         perguntas = list()
         for pergunta in cursor.fetchall():

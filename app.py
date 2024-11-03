@@ -6,6 +6,7 @@ import os  # Adicione esta linha
 from dotenv import load_dotenv
 from perguntas import registrar_rotas_perguntas
 from grupos import registrar_rotas_grupos
+from ordemDasPalavras import registrar_rotas_ordem_da_palavra
 
 load_dotenv()  # Carrega as variáveis de ambiente do .env
 
@@ -29,6 +30,7 @@ def home():
 
 registrar_rotas_perguntas(app, cursor)
 registrar_rotas_grupos(app, cursor)
+registrar_rotas_ordem_da_palavra(app, cursor)
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

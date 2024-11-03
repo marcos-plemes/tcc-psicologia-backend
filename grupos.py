@@ -16,9 +16,7 @@ def registrar_rotas_grupos(app, cursor):
                 'codigo': grupo[0],
                 'nome': grupo[1],
                 'isMostrarImagem': grupo[2],
-                'isMostrarImagemPrimeiro': grupo[3],
-                'isMostrarImagemCorrespondenteAPalavra': grupo[4],
-                'quantidadeDePalavras': grupo[5]
+                'isMostrarImagemPrimeiro': grupo[3]
             })
     
         return grupos
@@ -34,8 +32,7 @@ def registrar_rotas_grupos(app, cursor):
                 'nome': grupo[1],
                 'isMostrarImagem': grupo[2],
                 'isMostrarImagemPrimeiro': grupo[3],
-                'isMostrarImagemCorrespondenteAPalavra': grupo[4],
-                'quantidadeDePalavras': grupo[5]
+                'ordemDaPalavra': grupo[4]
             })
         else:
             return jsonify({'message': 'Grupo não encontrada'}), 404
@@ -46,13 +43,12 @@ def registrar_rotas_grupos(app, cursor):
             cursor.execute("""INSERT INTO public.grupo (gp_nome,
                                                         gp_mostrar_foto, 
                                                         gp_mostrar_foto_primeiro,
-                                                        gp_mostrar_foto_correspondente_a_palavra,
-                                                        gp_quantidade_de_palavras) VALUES(%s, %s, %s, %s, %s) RETURNING gp_codigo""",
+                                                        gp_ordem_da_palavra
+                           ) VALUES(%s, %s, %s, %s) RETURNING gp_codigo""",
                         (request.form['nome'],
                          request.form['isMostrarImagem'],
                          request.form['isMostrarImagemPrimeiro'],
-                         request.form['isMostrarImagemCorrespondenteAPalavra'],
-                         request.form['quantidadeDePalavras']
+                         request.form['ordemDaPalavra']
                          ))
         
             codigo = cursor.fetchone()[0]
@@ -74,14 +70,12 @@ def registrar_rotas_grupos(app, cursor):
                                  SET gp_mostrar_foto=%s, 
                                      gp_nome=%s, 
                                      gp_mostrar_foto_primeiro=%s,
-                                     gp_mostrar_foto_correspondente_a_palavra=%s,
-                                     gp_quantidade_de_palavras=%s
+                                     gp_ordem_da_palavra=%s
                                WHERE gp_codigo=%s;""",
                         (request.form['isMostrarImagem'],
                          request.form['nome'],
                          request.form['isMostrarImagemPrimeiro'],
-                         request.form['isMostrarImagemCorrespondenteAPalavra'],
-                         request.form['quantidadeDePalavras'],
+                         request.form['ordemDaPalavra'],
                          request.form['codigo']))
             return jsonify({'message': 'Grupo Alterado com sucesso!'}), 201    
         except Exception as e:

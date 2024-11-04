@@ -116,8 +116,8 @@ SELECT opi.opi_codigo,
 
         return itens
     
-    @app.route('/ordem-das-palavras/<int:codigo>/itens', methods=['PUT'])
-    def alterarItens(codigo):    
+    @app.route('/ordem-das-palavras/itens', methods=['PUT'])
+    def alterarItens():    
         try:
             for item in request.json:
                 cursor.execute(""" 
@@ -149,4 +149,48 @@ UPDATE ordem_da_palavra_item
             return jsonify({'message': 'Itens alterado com sucesso!'}), 201    
         
         except:
-            return 
+            return jsonify({"error": str(e)}), 500 
+        
+
+    @app.route('/ordem-das-palavras/<int:codigo>/itens-com-imagem', methods=['GET'])
+    def buscarItensComImagem(codigo):
+        cursor.execute("""
+SELECT opi.opi_codigo,
+       opi.opi_ordem_da_palavra,                
+       opi.opi_ordem,
+       
+       pgt.pg_descricao,
+       opi.opi_quantidade_da_palavra,
+       opi.opi_tempo_da_palavra,
+       opi.opi_intervalo_da_palavra,
+       
+       pgi.pg_imagem,
+       opi.opi_quantidade_da_imagem,
+       opi.opi_tempo_da_imagem,
+       opi.opi_intervalo_da_imagem
+  FROM ordem_da_palavra_item opi
+INNER JOIN perguntas pgt ON pgt.pg_codigo = opi.opi_palavra_texto  
+INNER JOIN perguntas pgi ON pgi.pg_codigo = opi.opi_palavra_imagem  
+     WHERE opi.opi_ordem_da_palavra = %s
+  ORDER BY opi.opi_ordem                            
+""", (codigo,))
+        
+        itens = list()
+        for item in cursor.fetchall():
+            itens.append({
+                'codigo': item[0],
+                'ordemDaPalavra': item[1],
+                'ordem': item[2],
+
+                'descricao': item[3],
+                'quantidadeDaPalavraTexto': item[4],
+                'tempoDaPalavraTexto': item[5],
+                'intervaloDaPalavraTexto': item[6],
+
+                'imagem': f"data:image/jpeg;base64,{base64.b64encode(item[7]).decode('utf-8')}",
+                'quantidadeDaPalavraImagem': item[8],
+                'tempoDaPalavraImagem': item[9],
+                'intervaloDaPalavraImagem': item[10],
+            })
+
+        return itens        

@@ -164,6 +164,7 @@ SELECT opi.opi_codigo,
        opi.opi_tempo_da_palavra,
        opi.opi_intervalo_da_palavra,
        
+       pgi.pg_descricao,                
        pgi.pg_imagem,
        opi.opi_quantidade_da_imagem,
        opi.opi_tempo_da_imagem,
@@ -187,10 +188,11 @@ INNER JOIN perguntas pgi ON pgi.pg_codigo = opi.opi_palavra_imagem
                 'tempoDaPalavraTexto': item[5],
                 'intervaloDaPalavraTexto': item[6],
 
-                'imagem': f"data:image/jpeg;base64,{base64.b64encode(item[7]).decode('utf-8')}",
-                'quantidadeDaPalavraImagem': item[8],
-                'tempoDaPalavraImagem': item[9],
-                'intervaloDaPalavraImagem': item[10],
+                'descricaoDaImagem': item[7],
+                'imagem': f"data:image/jpeg;base64,{base64.b64encode(item[8]).decode('utf-8')}",
+                'quantidadeDaPalavraImagem': item[9],
+                'tempoDaPalavraImagem': item[10],
+                'intervaloDaPalavraImagem': item[11],
             })
 
         return itens        
